@@ -8,17 +8,17 @@ const {
   deleteBlog,
 } = require("../controllers/blogController");
 
-const { requireAdmin } = require("../middleware/auth");
+const { protect, adminOnly } = require("../middleware/auth");
 
 const router = express.Router();
 
 router.route("/")
   .get(getBlogs)
-  .post(requireAdmin, createBlog);
+  .post(protect, adminOnly, createBlog);
 
 router.route("/:id")
   .get(getBlogById)
-  .put(requireAdmin, updateBlog)
-  .delete(requireAdmin, deleteBlog);
+  .put(protect, adminOnly, updateBlog)
+  .delete(protect, adminOnly, deleteBlog);
 
 module.exports = router;
